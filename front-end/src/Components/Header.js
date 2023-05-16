@@ -36,7 +36,7 @@ function Header() {
 
             <li className="nav-item">
               <NavLink className="nav-link" to="/addlink">
-                Add_Links
+                {/* Add Links */} Get Notifications
               </NavLink>
             </li>
 

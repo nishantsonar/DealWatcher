@@ -12,7 +12,6 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 
 
-
 /**
  * create a ProductFetcher class with one static method.
  */
@@ -62,14 +61,16 @@ public class ProductFetcher {
     }
 
     public static String amazonPrice(String url) throws IOException {
+        Element amazonPriceElement = null;
+        try {
+            Document document = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) " +
+                    "Gecko/20070725 Firefox/2.0.0.6").get();
 
-        Document document = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) " +
-                "Gecko/20070725 Firefox/2.0.0.6").get();
+            amazonPriceElement = document.select(".a-price-whole").first();
 
-        Element amazonPriceElement = document.select(".a-price-whole").first();
-
+        } catch (NullPointerException v) {
+            }
         return amazonPriceElement.text();
-
     }
 
     public static String flipkartPrice(String url) throws IOException {

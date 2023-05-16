@@ -4,7 +4,7 @@ import Header from "./Header";
 function About() {
   return (
     <div
-      style={{ backgroundColor: "#D3D3D3", height: "100vh", width: "100vw" }}
+      // style={{ backgroundColor: "#D3D3D3", height: "100vh", width: "100vw" }}
     >
       <Header />
       <div className="container">
@@ -24,27 +24,13 @@ function About() {
                     <tr className="text-center">
                       <td>
                         <h4>
-                          <b>DealWatcher.com</b>
+                          <b style={{fontWeight:"bolder"}}>DealWatcher.com</b>
                         </h4>
                       </td>
                     </tr>
                     <tr>
-                      <td>
-                        Welcome to DealWatcher.com, your go-to destination for
-                        real-time price tracking! We are a team of dedicated
-                        individuals who understand how frustrating it can be to
-                        miss out on a great deal or to overpay for a product.
-                        That's why we have created a powerful price tracking
-                        tool that keeps you informed about price changes. Our
-                        website allows you to create alerts for specific
-                        products and receive notifications when their prices
-                        drop or rise. We are committed to providing the best
-                        possible user experience, which is why our website is
-                        continuously updated with the latest prices from top
-                        e-commerce platforms and is designed to be user-friendly
-                        and intuitive. At DealWatcher.com, we believe that
-                        everyone deserves to save money and find the best deals
-                        online.
+                      <td style={{textAlign:"justify",fontSize:"#"}}>
+                      Welcome to DealWatcher.com, a website that offers real-time price tracking for your convenience. We are a team of dedicated individuals who understand how frustrating it is to miss out on a great deal or overpay for a product. We have created a powerful price tracking tool that keeps you informed about price changes. You can set up alerts for specific products, and we'll notify you when their prices drop or rise. Our website is continuously updated with the latest prices from top e-commerce platforms, and it's designed to be user-friendly and intuitive. At DealWatcher.com, we believe that everyone deserves to save money and find the best deals online. We're committed to providing you with the best possible user experience.
                       </td>
                     </tr>
                   </table>
@@ -56,9 +42,9 @@ function About() {
           <div className="text-center">
             <hr />
             <br />
-            <h2>Registered Office</h2>
+            <h2 style={{fontWeight:"bolder"}}>Registered Office</h2>
             <table className="table table-striped table-sm">
-              <td>Maharastra 422009, India</td>
+              <td>Nashik, Maharastra 422010, India</td>
 
               <br />
               <tr>

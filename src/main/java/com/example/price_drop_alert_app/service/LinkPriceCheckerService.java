@@ -14,6 +14,7 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class LinkPriceCheckerService {
     //    @Scheduled(fixedDelay = 3600000) // runs every hour
 //    @Scheduled(cron = "0 */1 * ? * *")
 
-//    @Scheduled(cron = "${com.scheduled.cron}")
+    @Scheduled(cron = "${com.scheduled.cron}")
     public void checkLinkPrices() throws IOException {
 
         /*
@@ -118,12 +119,12 @@ public class LinkPriceCheckerService {
                         String body = "Dearest " + fullName + ",\n\n\t"
                                 + "Our hearts are filled with joy, "
                                 + "As we bring you news of a lower price for " + productName +
-                                ".\n\t"
+                                ".\n\t\t"
                                 + "The price has dropped below your set threshold price of ₹" + userPrice + ", "
                                 + "And the new price is now ₹" + currentPrice + ", which is ₹" + difference + " lower.\n\t"
                                 + "If your heart desires " + productName + " at this price, "
                                 + "Please follow the link below to view the product page:\n\n"
-                                + url + "\n\n\t"
+                                + url + "\n\n\t\t"
                                 + "May your day be filled with beauty and wonder, "
                                 + "And may " + productName + " bring you the eternal bloom of happiness.\n\n"
                                 + "With love and warmth,\n"
@@ -140,9 +141,11 @@ public class LinkPriceCheckerService {
                             }
                         }
                         userRepo.save(userEntities.get(i));
-
+//                        System.out.println(userEntities.get(i).getFullName());
 
                     } catch (JpaObjectRetrievalFailureException e) {
+                        continue;
+                    } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
                         continue;
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -5,7 +5,7 @@ import "./CSS/Contactus.css";
 function Contact() {
   return (
     <div
-      style={{ backgroundColor: "#D3D3D3", height: "100vh", width: "100vw" }}
+      
     >
       <Header />
       <div
