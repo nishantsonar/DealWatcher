@@ -38,7 +38,7 @@ public class UserController {
      * @param customer It contains the fullName, email, password and phoneNo.
      * @return return the user object that contain the all information.
      */
-    @PostMapping("/add/")
+        @PostMapping("/add/")
     @CrossOrigin(origins = "http://localhost:3000")
     public UserEntity addCustomer(@RequestBody GetUserDetails customer) {
         /**

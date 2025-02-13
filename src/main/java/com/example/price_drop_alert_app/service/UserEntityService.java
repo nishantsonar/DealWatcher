@@ -26,6 +26,8 @@ public class UserEntityService implements IUserEntityService, UserDetailsService
     private UserRepo customerRepo;
     @Autowired
     private ProductRepo productRepo;
+    @Autowired
+    private SignupService signupService;
 
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -35,6 +37,7 @@ public class UserEntityService implements IUserEntityService, UserDetailsService
     @Override
     public UserEntity addUserEntity(UserEntity users) {
         users.setPassword(passwordEncoder().encode(users.getPassword()));
+        signupService.signUp(users.getEmail());
         return customerRepo.save(users);
     }
 
