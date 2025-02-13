@@ -26,11 +26,16 @@ public class UserController {
     /**
      * Autowire of IUserEntityService and IProductService interface
      */
-    @Autowired
-    private IUserEntityService userEntityService;
+
+    private final IUserEntityService userEntityService;
+
+    private final IProductService productService;
 
     @Autowired
-    private IProductService productService;
+    public UserController(IUserEntityService userEntityService, IProductService productService) {
+        this.userEntityService = userEntityService;
+        this.productService = productService;
+    }
 
     /**
      * This is for registration for user, can create account before use service.
@@ -38,7 +43,7 @@ public class UserController {
      * @param customer It contains the fullName, email, password and phoneNo.
      * @return return the user object that contain the all information.
      */
-        @PostMapping("/add/")
+    @PostMapping("/add/")
     @CrossOrigin(origins = "http://localhost:3000")
     public UserEntity addCustomer(@RequestBody GetUserDetails customer) {
         /**
@@ -87,14 +92,12 @@ public class UserController {
         UserEntity user = userEntityService.getUserEntity(getURLIdAndPrice.id());
 
         List<Product> productList = user.getLinks();
-
-        product.setPrice(getURLIdAndPrice.price());
-
-        productList.add(product);
-
-        user.setLinks(productList);
-
-        productService.saveProduct(product);
+        if (product != null) {
+            product.setPrice(getURLIdAndPrice.price());
+            productList.add(product);
+            user.setLinks(productList);
+            productService.saveProduct(product);
+        }
         return user;
     }
 
@@ -125,5 +128,9 @@ public class UserController {
         return userEntityService.getid(email);
     }
 
+    @PostMapping("/get")
+    public List<UserEntity> getAlls() {
+        return userEntityService.getAllUserEntity();
+    }
 
 }

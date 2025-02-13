@@ -17,8 +17,15 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
+
+    private final IUserEntityService userEntityService;
+
     @Autowired
-    private IUserEntityService userEntityService;
+    public AdminController(IUserEntityService userEntityService) {
+        this.userEntityService = userEntityService;
+    }
+
+
 
     @GetMapping("/")
     public String home() {

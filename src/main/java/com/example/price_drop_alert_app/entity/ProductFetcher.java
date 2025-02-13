@@ -8,6 +8,8 @@ package com.example.price_drop_alert_app.entity;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -16,6 +18,8 @@ import java.io.IOException;
  * create a ProductFetcher class with one static method.
  */
 public class ProductFetcher {
+    private static final Logger log = LoggerFactory.getLogger(ProductFetcher.class);
+
     private ProductFetcher() {
     }
 
@@ -69,6 +73,7 @@ public class ProductFetcher {
             amazonPriceElement = document.select(".a-price-whole").first();
 
         } catch (NullPointerException v) {
+            log.error("error: ",v);
             }
         return amazonPriceElement.text();
     }

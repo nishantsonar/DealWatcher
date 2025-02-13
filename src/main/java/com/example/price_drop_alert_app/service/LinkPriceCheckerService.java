@@ -13,6 +13,7 @@ import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -26,8 +27,17 @@ import java.util.Properties;
 @Service
 @Component
 public class LinkPriceCheckerService {
+    private final UserRepo userRepo;
+    @Value("${email.username}")
+    private String username;
+    @Value("${email.password}")
+    private String password;
+
     @Autowired
-    private UserRepo userRepo;
+    public LinkPriceCheckerService(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
+
 
     private String removeSpecialChar(String str) {
         return str.replaceAll("[-+.^:,₹]", "");
@@ -51,8 +61,6 @@ public class LinkPriceCheckerService {
         properties.put("mail.smtp.starttls.enable", true);
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.host", "smtp.gmail.com");
-        String username = "nishantsonar9@gmail.com";
-        String password = "czvxcrkiubwkibvc";
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -141,11 +149,8 @@ public class LinkPriceCheckerService {
                             }
                         }
                         userRepo.save(userEntities.get(i));
-//                        System.out.println(userEntities.get(i).getFullName());
 
-                    } catch (JpaObjectRetrievalFailureException e) {
-                        continue;
-                    } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+                    } catch (JpaObjectRetrievalFailureException | IndexOutOfBoundsException e) {
                         continue;
                     } catch (Exception e) {
                         e.printStackTrace();

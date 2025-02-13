@@ -1,11 +1,14 @@
 package com.example.price_drop_alert_app.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SignupService {
+    private static final Logger log = LoggerFactory.getLogger(SignupService.class);
     private final KafkaTemplate<String,String> kafkaTemplate;
 
     @Autowired
@@ -15,7 +18,7 @@ public class SignupService {
 
     public void signUp(String email){
         // Simulate user signup
-        System.out.println("User signed up with email: " + email);
+        log.info("User signed up with email: {}" , email);
 
         kafkaTemplate.send("signup-topic",email);
     }

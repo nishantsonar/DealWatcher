@@ -12,8 +12,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService implements IProductService {
-    @Autowired
     private ProductRepo repository;
+
+    @Autowired
+    public ProductService(ProductRepo repository) {
+        this.repository = repository;
+    }
+
+
 
     public Product saveProduct(Product product) {
         return repository.save(product);

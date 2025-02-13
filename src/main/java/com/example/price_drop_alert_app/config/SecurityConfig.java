@@ -47,35 +47,9 @@ public class SecurityConfig {
      */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-
-//        httpSecurity.csrf().and().cors().disable()
-//                .authorizeHttpRequests(authorize ->
-//                        authorize.requestMatchers("/user/add-link", "/user/add/",
-//                                        "user/login/", "/user/getid", "/admin/add", "/admin/login")
-//                                .permitAll()
-//                                .anyRequest().authenticated()
-//
-//                ).sessionManagement(session -> session
-//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                ).httpBasic(Customizer.withDefaults());
-//        return httpSecurity.build();
         return httpSecurity.csrf().disable().cors().disable().authorizeHttpRequests(auth -> auth.requestMatchers("/user/login",
                 "/user/add-link",
                 "/user" +
-                "/add/", "/user/getid").permitAll().anyRequest().authenticated()).build();
+                "/add/", "/user/getid","/user/get").permitAll().anyRequest().authenticated()).build();
     }
-
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**")
-//                        .allowedOrigins("*")
-//                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-//                        .allowedHeaders("*");
-//            }
-//        };
-//    }
-
 }

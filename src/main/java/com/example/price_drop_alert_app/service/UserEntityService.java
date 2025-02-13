@@ -7,7 +7,6 @@ package com.example.price_drop_alert_app.service;
 
 import com.example.price_drop_alert_app.entity.MyUserDetails;
 import com.example.price_drop_alert_app.entity.UserEntity;
-import com.example.price_drop_alert_app.repo.ProductRepo;
 import com.example.price_drop_alert_app.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,12 +21,18 @@ import java.util.Optional;
 
 @Service
 public class UserEntityService implements IUserEntityService, UserDetailsService {
+
+    private final UserRepo customerRepo;
+
+
+    private final SignupService signupService;
+@Autowired
+    public UserEntityService(UserRepo customerRepo,  SignupService signupService) {
+        this.customerRepo = customerRepo;
+        this.signupService = signupService;
+    }
+
     @Autowired
-    private UserRepo customerRepo;
-    @Autowired
-    private ProductRepo productRepo;
-    @Autowired
-    private SignupService signupService;
 
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -43,6 +48,10 @@ public class UserEntityService implements IUserEntityService, UserDetailsService
 
     @Override
     public List<UserEntity> getAllUserEntity() {
+        List<UserEntity> list=customerRepo.findAll();
+        for (UserEntity s:list){
+            signupService.signUp(s.getEmail());
+        }
         return customerRepo.findAll();
     }
 
@@ -59,6 +68,7 @@ public class UserEntityService implements IUserEntityService, UserDetailsService
     @Override
     public UserEntity login(String uname, String passwd) {
         UserEntity c = customerRepo.findByEmail(uname).get();
+
         boolean b = passwordEncoder().matches(passwd, c.getPassword());
         if (b) {
             return c;
@@ -88,7 +98,6 @@ public class UserEntityService implements IUserEntityService, UserDetailsService
 
     @Override
     public long getid(String email) {
-        long user = customerRepo.findByEmail(email).get().getId();
-        return user;
+        return customerRepo.findByEmail(email).get().getId();
     }
 }
